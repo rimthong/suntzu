@@ -1,5 +1,12 @@
+//Just a container class
 class BerlinNode{
-    def node_id
+    public int node_id
     def player_id
     def number_of_soldiers
+    def node_type
+    public int securityLevel;
+
+    public String toString(){
+        return "node_id:${node_id} player_id:${player_id} number_of_soldiers: ${number_of_soldiers} node_type:${node_type}"
+    }
 }

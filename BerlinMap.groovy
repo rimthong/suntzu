@@ -38,9 +38,13 @@ class BerlinMap{
             nodes.get(node.node_id).player_id=node.player_id;
             nodes.get(node.node_id).number_of_soldiers=node.number_of_soldiers;
             if(node.player_id == myID){
+                nodes.get(node.node_id).isFriendly=true;
                 myNodes.add(node.node_id)
-                //set security level
             }
+        }
+        //Do a second pass in own nodes to compute security levels
+        for(node in myNodes){
+                computeSecurityLevel(node)
         }
         return this.toString();
     }
@@ -65,14 +69,21 @@ class BerlinMap{
 
 
     //Computes how dangerous the place is, regarding to your number of soldiers vs surroundings
-    public computeSecurityLevel(BerlinNode node, List<Integer> invaders){
-        int securityLevel = node.number_of_soldiers;
+    public computeSecurityLevel(int nodeID){
+        BerlinNode node = nodes.get(nodeID)
+        List<Integer> invaders = paths.get(nodeID)
+        Integer securityLevel = node.number_of_soldiers;
+        int friendCount=0;
         for(node_id in invaders){
             if(nodes.get(node_id).player_id!=myID){
-                securityLevel -= nodes.get(node_id).number_of_soldiers;
+                securityLevel = securityLevel - nodes.get(node_id).number_of_soldiers;
             } else {
                 //False Alarm
+                friendCount++
             }
+        }
+        if(friendCount==invaders.size()){
+            node.isSafe=true;
         }
         node.securityLevel=securityLevel;
     }

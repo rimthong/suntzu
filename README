@@ -1,0 +1,5 @@
+AI for Berlin game, coded in groovy and using google app engine with gaelyk.
+
+v1.0
+---
+*Currently works as a dumb stateless heuristics engine.
